@@ -12,18 +12,18 @@ export const asyncHandler = (fn) => {
 
     if (req.validationresult) {
       return res
-        .status(error.cause || 400)
+        .status(statusCode)
         .json({ message: error.message, details: req.validationresult.details });
     }
   
     if (process.env.NODE_ENV === 'development') {
       return res
-        .status(error.cause || 400)
+        .status(statusCode)
         .json({ message: error.message, stack: error.stack });
     }
   
     return res
-      .status(error.cause || 400)
+      .status(statusCode)
       .json({ message: error.message });
   };
   

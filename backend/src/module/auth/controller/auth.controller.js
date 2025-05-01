@@ -1,11 +1,15 @@
-import userModel from './../../../../DB/models/User.model.js';
+import userModel from '../../../../DB/models/user.model.js';
 import { asyncHandler } from '../../../utils/asyncHandler.js';
+// import {registerSchema ,validateRegister} from './../auth.validation.js';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 
 //=================================== signUp  ======================================
 export const signUp = asyncHandler(async (req, res, next) => {
+
+
   const { email, firstName, lastName, mobileNumber, password } = req.body;
+
 
   if (await userModel.findOne({ email })) {
     return next(new Error("Email already exists, please login"), { cause: 409 });
@@ -40,7 +44,7 @@ export const login = asyncHandler(async (req, res, next) => {
   }
 
   const token = jwt.sign(
-    { id: user._id, email: user.email , role : user.role },
+    { _id: user._id, email: user.email , role : user.role },
     process.env.SIGNTURE,
     { expiresIn: "9h" }
   );
